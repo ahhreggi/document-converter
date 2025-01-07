@@ -1,0 +1,4 @@
+export const STRING_DEFAULT_LINE_DELIMITER = '~';
+export const STRING_DEFAULT_ELEMENT_DELIMITER = '*';
+export const STRING_DEFAULT_MINIFY = false;
+export const STRING_DEFAULT_PRESERVE_WHITESPACE = false;
