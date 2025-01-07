@@ -193,13 +193,13 @@ curl -X POST "localhost:3000/document/convert" \
 
 ### Example #2: Invalid DocumentData Structure
 
-The input `data` passes initial input validation since it's valid XML, but fails validation after parsing due to not conforming to the `DocumentData` type. In this case, Segment "B" doesn't have at least one element.
+The input `data` passes initial input validation since it's valid XML, but fails validation after parsing due to not conforming to the `DocumentData` type.
 
 ```
 curl -X POST "localhost:3000/document/convert" \
 -H "Content-Type: application/json" \
 -d '{
-  "data": "<root><A><A1>1</A1></A><B></B></root>",
+  "data": "<root></root>",
   "toFormat": "string"
 }' && echo
 ```
@@ -211,8 +211,7 @@ curl -X POST "localhost:3000/document/convert" \
   "error": "Validation Error",
   "details": [
     {
-      "field": ["B"],
-      "message": "Segment must contain at least one element",
+      "message": "Document should have at least one segment",
       "detectedInputFormat": "xml"
     }
   ]
