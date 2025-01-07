@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { DocumentData } from '../types';
 
 /**
- * Zod schema for DocumentData objects, which are essentially JSON objects that conform
+ * Schema for DocumentData objects, which are essentially JSON objects that conform
  * to a specific structure.
  *
  * Specifications:

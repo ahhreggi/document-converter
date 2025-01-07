@@ -16,18 +16,20 @@ Built using TypeScript, Node, Express. Uses Zod for validation, and `fast-xml-pa
 
 ### ✔️ Validating the Parsed Data
 
-1.  `DocumentData` objects must be a non-empty object containing key-value pairs.
-2.  All keys must be non-empty strings.
-3.  Top-level values must be non-empty arrays containing at least one element.
-4.  Elements of the arrays must be non-empty objects containing key-value pairs.
-5.  Values in the objects must be strings (the strings may be empty).
+```js
+// Valid
+{ "A": [{ "B": "", "C": "D" }] }
+// Invalid
+{ "A": [], { "B": [], "": ["123"] }, "C": "" }
+```
 
-    ```js
-    // Invalid
-    { "A": [], { "B": [], "": ["123"] }, "C": "" }
-    // Valid
-    { "A": [{ "B": "", "C": "D" }] }
-    ```
+**Specifications:**
+
+1. `DocumentData` objects must be a non-empty object containing key-value pairs.
+2. All keys must be non-empty strings.
+3. Top-level values must be non-empty arrays containing at least one element.
+4. Elements of the arrays must be non-empty objects containing key-value pairs.
+5. Values in the objects must be strings (the strings may be empty).
 
 ## 🛠 Installation
 
@@ -44,9 +46,10 @@ Built using TypeScript, Node, Express. Uses Zod for validation, and `fast-xml-pa
    npm install
    ```
 
-3. Run the server
+3. Build and run the server (dev mode: `npm run dev`)
    ```
-   npm run dev
+   npm run build
+   npm run start
    ```
 
 ## 🌐 POST `/document/convert`
@@ -57,7 +60,7 @@ Converts a document from one format to another.
 
 | Field                | Type               | Required or Optional                                                                    | Description                                                                                              |
 | -------------------- | ------------------ | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `data`               | `string`, `object` | Required                                                                                | The document data                                                                                        |
+| `data`               | `string`, `object` | Required                                                                                | The document data (as a string or JSON object/string)                                                    |
 | `toFormat`           | `string`           | Required                                                                                | The target format (`json`, `xml`, `string`)                                                              |
 | `lineDelimiter`      | `string`           | Required if input data is in string format, optional if `toFormat` is `string`          | Delimiter used to separate lines in the string format (works for both input and output)                  |
 | `elementDelimiter`   | `string`           | Required if input data is in string format, optional if `toFormat` is `string`          | Delimiter used to separate elements within a line in the string format (works for both input and output) |
@@ -165,7 +168,7 @@ The endpoint will respond with a `Validation Error` and some additional context 
 
 ### Example #1: Invalid XML
 
-The input `data` is missing closing bracket on `</root>`.
+The input `data` is missing the closing bracket on `</root>`.
 
 ```
 curl -X POST "localhost:3000/document/convert" \

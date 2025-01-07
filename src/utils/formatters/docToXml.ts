@@ -1,11 +1,6 @@
 import { XMLBuilder } from 'fast-xml-parser';
 import { DocumentData } from '../../types';
-import {
-  XML_DECLARATION,
-  XML_DEFAULT_MINIFY,
-  XML_ROOT_TAG,
-} from '../../config/xml';
-
+import { xmlConfig } from '../../config';
 /**
  * Formats a DocumentData JSON object into a valid XML string representation.
  *
@@ -15,7 +10,7 @@ import {
  */
 export const docToXml = (
   documentData: DocumentData,
-  minify = XML_DEFAULT_MINIFY
+  minify = xmlConfig.XML_DEFAULT_MINIFY
 ): string => {
   const builder = new XMLBuilder({
     ignoreAttributes: false,
@@ -24,8 +19,8 @@ export const docToXml = (
   });
 
   const xml = builder.build({
-    [XML_ROOT_TAG]: documentData,
+    [xmlConfig.XML_ROOT_NAME]: documentData,
   });
 
-  return `${XML_DECLARATION}${minify ? '' : '\n'}${xml}`;
+  return `${xmlConfig.XML_DECLARATION}${minify ? '' : '\n'}${xml}`;
 };

@@ -1,15 +1,8 @@
-import {
-  STRING_DEFAULT_ELEMENT_DELIMITER,
-  STRING_DEFAULT_LINE_DELIMITER,
-  STRING_DEFAULT_PRESERVE_WHITESPACE,
-} from '../../config/string';
+import { stringConfig } from '../../config';
 import { JsonObject } from '../../types';
 
 /**
  * Parses a string representation of a document into a JSON object.
- *
- * Whitespace is trimmed from segment names and element values.
- * Empty element values ("") are preserved.
  *
  * @param {string} data - A string representation of a document.
  * @param {string} lineDelimiter - The delimiter used to separate lines in the document.
@@ -19,9 +12,9 @@ import { JsonObject } from '../../types';
  */
 export const parseString = (
   data: string,
-  lineDelimiter = STRING_DEFAULT_LINE_DELIMITER,
-  elementDelimiter = STRING_DEFAULT_ELEMENT_DELIMITER,
-  preserveWhitespace = STRING_DEFAULT_PRESERVE_WHITESPACE
+  lineDelimiter = stringConfig.STRING_DEFAULT_LINE_DELIMITER,
+  elementDelimiter = stringConfig.STRING_DEFAULT_ELEMENT_DELIMITER,
+  preserveWhitespace = stringConfig.STRING_DEFAULT_PRESERVE_WHITESPACE
 ): JsonObject => {
   const result: JsonObject = {};
 
@@ -36,14 +29,12 @@ export const parseString = (
 
       // Construct an object with the segment elements
       const jsonObject: JsonObject = {};
-      let id = 1;
       for (let i = 0; i < elements.length; i++) {
         let value = elements[i];
         if (!preserveWhitespace) {
           value = value.trim();
         }
-        jsonObject[segmentName + id] = value;
-        id++;
+        jsonObject[segmentName + (i + 1)] = value;
       }
 
       // Add the object to result under the segment name

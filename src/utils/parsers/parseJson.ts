@@ -7,6 +7,7 @@ import { JsonObject } from '../../types';
  * @returns {JsonObject} - A JSON object containing document data.
  */
 export const parseJson = (data: string): JsonObject => {
-  // Maybe custom logic for trimming elements
+  // Leaving this for consistency, but could also implement custom logic here such as
+  // force-trimming elements, adding/omitting attributes, etc.
   return JSON.parse(data);
 };

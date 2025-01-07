@@ -3,13 +3,10 @@ import { documentRoutes } from './routes';
 
 const app = express();
 
-// Middleware for parsing JSON
 app.use(express.json());
 
-// Document-related routes
 app.use('/document', documentRoutes);
 
-// Global error handler
 app.use((error: Error, req: Request, res: Response) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });

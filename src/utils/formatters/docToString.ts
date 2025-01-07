@@ -1,9 +1,4 @@
-import {
-  STRING_DEFAULT_ELEMENT_DELIMITER,
-  STRING_DEFAULT_LINE_DELIMITER,
-  STRING_DEFAULT_MINIFY,
-  STRING_DEFAULT_PRESERVE_WHITESPACE,
-} from '../../config/string';
+import { stringConfig } from '../../config';
 import { DocumentData } from '../../types';
 
 /**
@@ -18,10 +13,10 @@ import { DocumentData } from '../../types';
  */
 export const docToString = (
   documentData: DocumentData,
-  lineDelimiter = STRING_DEFAULT_LINE_DELIMITER,
-  elementDelimiter = STRING_DEFAULT_ELEMENT_DELIMITER,
-  minify = STRING_DEFAULT_MINIFY,
-  preserveWhitespace = STRING_DEFAULT_PRESERVE_WHITESPACE
+  lineDelimiter = stringConfig.STRING_DEFAULT_LINE_DELIMITER,
+  elementDelimiter = stringConfig.STRING_DEFAULT_ELEMENT_DELIMITER,
+  minify = stringConfig.STRING_DEFAULT_MINIFY,
+  preserveWhitespace = stringConfig.STRING_DEFAULT_PRESERVE_WHITESPACE
 ): string => {
   const newline = minify ? '' : '\n';
   let result = '';
@@ -35,10 +30,6 @@ export const docToString = (
         )
         .join(elementDelimiter);
       result += `${segmentName}${elementDelimiter}${segmentString}${lineDelimiter}${newline}`;
-    }
-    // If a segment exists without any data, add it without any elements
-    if (!segmentData.length) {
-      result += `${segmentName}${lineDelimiter}${newline}`;
     }
   }
   return result.trim();
